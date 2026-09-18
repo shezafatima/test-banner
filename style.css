@@ -163,8 +163,27 @@ body {
 }
 
 @media (max-width: 640px) {
+  /* On small screens there's no room for a wide "logo left, video
+     right" composition, so the whole stack centers on the screen
+     instead of hugging the left edge, and the SVGs size up relative
+     to viewport width so they read clearly at arm's length. */
+  .hero__content {
+    align-items: center;
+    padding: clamp(0.75rem, 4vw, 2rem);
+    text-align: center;
+  }
+
   .hero__stack {
-    gap: 0.2rem;
+    gap: 0.3rem;
+    max-width: 95vw;
+  }
+
+  .hero__crop {
+    width: clamp(300px, 90vw, 540px);
+  }
+
+  .hero__crop--logo {
+    width: clamp(260px, 74vw, 420px);
   }
 }
 

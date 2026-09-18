@@ -1,0 +1,180 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: 'Arial Black', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 480px;
+  overflow: hidden;
+  background: #05131c; /* shows briefly while the video buffers */
+}
+
+.hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* Subtle scrim so the brand colors in the SVGs stay legible over any
+   part of the video, without changing the video's own look. */
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.35) 0%,
+    rgba(0, 0, 0, 0.15) 35%,
+    rgba(0, 0, 0, 0.15) 65%,
+    rgba(0, 0, 0, 0.35) 100%
+  );
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(1rem, 5vw, 3rem);
+  padding-left: clamp(1.5rem, 8vw, 6rem);
+}
+
+/* The logo and the two text lines aren't the same width, so centering
+   them relative to the whole (wide) hero__content would just center
+   them on the viewport. Instead this inner stack hugs its own content
+   (width: max-content) and centers the three items relative to each
+   other/the logo within that, while hero__content above keeps the
+   whole block pinned to the left side of the hero. */
+.hero__stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: max-content;
+  max-width: 90vw;
+  gap: clamp(0.2rem, 1vw, 0.6rem);
+}
+
+/* Each SVG file has a lot of transparent padding baked into its own
+   canvas (measured directly from the assets, not guessed). Cropping
+   that out with overflow:hidden + a negative margin-top on the image
+   (percentages on margin-top resolve against the container's WIDTH,
+   so this scales correctly at any size) removes the dead space
+   between elements without touching the SVG files themselves. Only
+   the vertical padding is cropped — horizontal extents depend on
+   glyph widths, which vary slightly by font/browser, so cropping
+   there could clip text; leaving horizontal alone is font-safe. */
+.hero__crop {
+  overflow: hidden;
+  width: clamp(220px, 42vw, 620px);
+}
+
+.hero__crop img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.hero__crop--logo {
+  width: clamp(240px, 34vw, 460px);
+  aspect-ratio: 2400 / 718.34;
+}
+
+.hero__crop--logo img {
+  margin-top: -2.54%;
+}
+
+.hero__crop--line1 {
+  aspect-ratio: 1774 / 545;
+}
+
+.hero__crop--line1 img {
+  margin-top: -11%;
+}
+
+.hero__crop--line2 {
+  aspect-ratio: 2103 / 416;
+}
+
+.hero__crop--line2 img {
+  margin-top: -8.51%;
+}
+
+/* Staggered, one-by-one reveal: fade + gentle upward drift.
+   Each item's delay equals the previous item's delay + duration, so
+   the logo fully finishes rising before "Nurturing Minds" starts,
+   which fully finishes before "Building Futures" starts.
+   animation-fill-mode: both keeps each element hidden until its own
+   delay elapses, and holds the final state afterwards — no layout
+   shift, since only opacity/transform are animated. */
+.hero__crop {
+  opacity: 0;
+}
+
+.hero__crop--logo {
+  animation: heroRevealScale 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+}
+
+.hero__crop--line1 {
+  animation: heroReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) 1.1s both;
+}
+
+.hero__crop--line2 {
+  animation: heroReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) 2s both;
+}
+
+@keyframes heroReveal {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroRevealScale {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 640px) {
+  .hero__stack {
+    gap: 0.2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__crop,
+  .hero__crop--logo,
+  .hero__crop--line1,
+  .hero__crop--line2 {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}

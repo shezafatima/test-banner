@@ -16,6 +16,6 @@
       }
     </style>
   </defs>
-  <text x="887" y="360" class="word nurturing" fill="#024F2B">NURTURING</text>
-  <text x="887" y="660" class="word minds" fill="#024F2B">MINDS</text>
+  <text x="887" y="360" class="word nurturing" fill="#FFFF00">NURTURING</text>
+  <text x="887" y="660" class="word minds" fill="#FFFF00">MINDS</text>
 </svg>

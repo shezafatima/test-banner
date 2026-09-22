@@ -54,7 +54,7 @@ body {
   align-items: flex-start;
   justify-content: center;
   padding: clamp(1rem, 5vw, 3rem);
-  padding-left: clamp(1.5rem, 8vw, 6rem);
+  padding-left: clamp(1rem, 3vw, 2rem);
 }
 
 /* The logo and the two text lines aren't the same width, so centering
@@ -66,10 +66,10 @@ body {
 .hero__stack {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   width: max-content;
   max-width: 90vw;
-  gap: clamp(0.2rem, 1vw, 0.6rem);
+  gap: clamp(0.35rem, 0.8vw, 0.6rem);
 }
 
 /* Each SVG file has a lot of transparent padding baked into its own
@@ -94,11 +94,7 @@ body {
 
 .hero__crop--logo {
   width: clamp(240px, 34vw, 460px);
-  aspect-ratio: 2400 / 718.34;
-}
-
-.hero__crop--logo img {
-  margin-top: -2.54%;
+  aspect-ratio: 1974 / 797;
 }
 
 .hero__crop--line1 {
@@ -107,14 +103,16 @@ body {
 
 .hero__crop--line1 img {
   margin-top: -11%;
+  margin-left: -20%;
 }
 
 .hero__crop--line2 {
-  aspect-ratio: 2103 / 416;
+  aspect-ratio: 1600 / 600;
 }
 
 .hero__crop--line2 img {
   margin-top: -8.51%;
+  margin-left: -20%;
 }
 
 /* Staggered, one-by-one reveal: fade + gentle upward drift.
@@ -163,14 +161,12 @@ body {
 }
 
 @media (max-width: 640px) {
-  /* On small screens there's no room for a wide "logo left, video
-     right" composition, so the whole stack centers on the screen
-     instead of hugging the left edge, and the SVGs size up relative
-     to viewport width so they read clearly at arm's length. */
+  /* Keep the stack left-aligned while allowing the SVGs to grow on
+     small screens so they remain easy to read. */
   .hero__content {
-    align-items: center;
+    align-items: flex-start;
     padding: clamp(0.75rem, 4vw, 2rem);
-    text-align: center;
+    text-align: left;
   }
 
   .hero__stack {
